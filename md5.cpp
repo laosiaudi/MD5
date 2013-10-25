@@ -65,6 +65,7 @@ typedef unsigned int uint32;
 uint32 word[4] = {0x67452301,0xefcdab89,0x98badcfe,0x10325476};
 
 void reset(){
+
 	word[0]=0x67452301;
 	word[1]=0xefcdab89;
 	word[2]=0x98badcfe;
@@ -169,10 +170,11 @@ string convertFinal(uint32 s){
 string append(string s){
 	int length = s.size();
 
+
 	string s_length = convertN(length);
-
+	
 	vector<char>v;
-
+	v.clear();
 	v.push_back('1');
 	
 	int l = length;
@@ -182,17 +184,19 @@ string append(string s){
 	}
 	l ++;
 	
-	char *app = new char[l+1];
-	for (int i = 0;i < l;i ++)
+	char *app = new char[l+1-length];
+	for (int i = 0;i < l-length;i ++)
 		app[i] = v[i];
-	app[l]='\0';
+	app[l-length]='\0';
 	string sapp(app);
+	
 	char *cstr = new char [s.size()+1];
 
 	strcpy(cstr,s.c_str());
 	string ccstr(cstr);
 	
 	string newstr = ccstr + sapp + s_length;
+	
 	return newstr;
 
 
@@ -227,7 +231,7 @@ string md5(string s){
 		for (int j = 0;j < 16;j ++){
 			 s_packet[j] = decode(s,i,j);
 			
-
+			 
 		}
 		/*Round 1*/
 		FF (a, b, c, d, s_packet[ 0], S11, 0xd76aa478); /* 1 */

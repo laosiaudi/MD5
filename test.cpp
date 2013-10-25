@@ -3,9 +3,13 @@
 #include <vector>
 #include <math.h>
 #include <stack>
-#include "md5.cpp"
+
 using namespace std;
 
+void reset();
+string convert(string s);
+string append(string s);
+string md5(string s);
 int main()
 {
 	string message;
