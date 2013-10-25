@@ -4,7 +4,7 @@
 #include <math.h>
 #include <stack>
 using namespace std;
-
+//头部定义部分
 int S11;
 int S12;
 int S13; 
@@ -21,7 +21,20 @@ int S41 ;
 int S42 ;
 int S43 ;
 int S44;
+const char HEX[16] = {
+	'0', '1', '2', '3',
+	'4', '5', '6', '7',
+	'8', '9', 'a', 'b',
+	'c', 'd', 'e', 'f'
+};
 
+typedef unsigned char byte;
+typedef unsigned int uint32;
+
+//uint32 word[4] = {0x01234567,0x89abcdef,0xfedcba98,0x76543210};
+
+uint32 word[4] = {0x67452301,0xefcdab89,0x98badcfe,0x10325476};
+//函数定义部分
 #define F(x, y, z) (((x) & (y)) | ((~x) & (z)))
 #define G(x, y, z) (((x) & (z)) | ((y) & (~z)))
 #define H(x, y, z) ((x) ^ (y) ^ (z))
@@ -50,20 +63,8 @@ int S44;
 	(a) += (b); \
 }
 
-const char HEX[16] = {
-	'0', '1', '2', '3',
-	'4', '5', '6', '7',
-	'8', '9', 'a', 'b',
-	'c', 'd', 'e', 'f'
-};
 
-typedef unsigned char byte;
-typedef unsigned int uint32;
-
-//uint32 word[4] = {0x01234567,0x89abcdef,0xfedcba98,0x76543210};
-
-uint32 word[4] = {0x67452301,0xefcdab89,0x98badcfe,0x10325476};
-
+//重置函数
 void reset(){
 
 	word[0]=0x67452301;
@@ -88,6 +89,7 @@ void reset(){
 	S44 =21;
 
 }
+//用于将原始字符串转换为二进制的函数
 string convert(string s){
 	int length = s.size();
 
@@ -110,7 +112,7 @@ string convert(string s){
 
 	return str;
 }
-
+//用于将长度转换成二进制的函数
 string convertN(int s){
 	
 	char tt[65];
@@ -139,6 +141,7 @@ string convertN(int s){
 
 	return str;
 }
+//用于最后对a,b,c,d进行二进制转换的函数
 string convertFinal(uint32 s){
 	char tt[9];
 	int index = 0;
@@ -167,6 +170,7 @@ string convertFinal(uint32 s){
 	return str;
 
 }
+//用于补1和补0的函数
 string append(string s){
 	int length = s.size();
 
@@ -201,7 +205,7 @@ string append(string s){
 
 
 }
-
+//用于计算32位字符串所表示整数的函数
 uint32 decode(string s,int i,int j){
 	uint32 sum = 0x0;
 	
@@ -220,7 +224,7 @@ uint32 decode(string s,int i,int j){
 	
 	return sum;
 }
-
+//主要加密函数
 string md5(string s){
 
 	int time = s.size()/512;
